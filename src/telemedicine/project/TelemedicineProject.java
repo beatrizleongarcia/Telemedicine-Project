@@ -18,6 +18,7 @@ public class TelemedicineProject {
         // TODO code application logic here
         
         // funcionara???
+        //si o no
         
     }
     
