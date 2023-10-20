@@ -9,7 +9,7 @@ package GUI;
  * @author maria
  */
 public class LogIn extends javax.swing.JPanel implements java.beans.Customizer {
-    
+
     private Object bean;
 
     /**
@@ -18,7 +18,8 @@ public class LogIn extends javax.swing.JPanel implements java.beans.Customizer {
     public LogIn() {
         initComponents();
     }
-    
+
+    @Override
     public void setObject(Object bean) {
         this.bean = bean;
     }
@@ -122,7 +123,6 @@ public class LogIn extends javax.swing.JPanel implements java.beans.Customizer {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
