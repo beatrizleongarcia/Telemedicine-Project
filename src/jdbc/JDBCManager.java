@@ -46,7 +46,9 @@ public class JDBCManager implements Manager {
             String sq1 = "CREATE TABLE IF NOT EXISTS patient " + "(id     INTEGER  PRIMARY KEY AUTOINCREMENT,"
                     + " name  TEXT   NOT NULL, " + " lastname  TEXT   NOT NULL, " + " email   TEXT NOT NULL, "
                     + " username  TEXT   NOT NULL, " + " password  BLOB   NOT NULL, " + " gender TEXT CHECK (gender = 'M' OR gender = 'F'), "
-                    + " mac TEXT NOT NULL, ";
+                    + " mac TEXT NOT NULL) "
+                    + "CREATE TABLE IF NOT EXISTS ECG " + "(id     INTEGER  PRIMARY KEY AUTOINCREMENT, "
+                    + " observation TEXT NOT NULL, " + " patientId INTEGER NOT NULL, ";//Hay que ver como meter el arraylist en la base de datos, porque SQLite no soporta ese tipo de dato
             stmt.executeUpdate(sq1);
 
             //sq1 = "CREATE TABLE IF NOT EXISTS ECG "
