@@ -8,6 +8,6 @@ package ifaces;
  *
  * @author maria
  */
-public class PatientManager {
-    
+public interface PatientManager {
+
 }

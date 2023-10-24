@@ -4,10 +4,12 @@
  */
 package jdbc;
 
+import ifaces.ECGManager;
+
 /**
  *
  * @author maria
  */
-public class JDBCECGManager {
-    
+public class JDBCECGManager implements ECGManager {
+
 }

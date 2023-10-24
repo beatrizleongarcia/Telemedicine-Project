@@ -4,10 +4,12 @@
  */
 package jdbc;
 
+import ifaces.PatientManager;
+
 /**
  *
  * @author maria
  */
-public class JDBCPatientManager {
-    
+public class JDBCPatientManager implements PatientManager {
+
 }

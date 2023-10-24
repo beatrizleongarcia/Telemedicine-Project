@@ -4,6 +4,7 @@
  */
 package jdbc;
 
+import ifaces.Manager;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import java.sql.Statement;
  *
  * @author maria
  */
-public class JDBCManager {
+public class JDBCManager implements Manager {
 
     private Connection c;
 

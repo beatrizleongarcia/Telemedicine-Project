@@ -8,6 +8,6 @@ package ifaces;
  *
  * @author maria
  */
-public class ECGManager {
-    
+public interface ECGManager {
+
 }

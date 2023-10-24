@@ -8,6 +8,12 @@ package ifaces;
  *
  * @author maria
  */
-public class Manager {
-    
+public interface Manager {
+
+    public void connect();
+
+    public void disconnect();
+
+    public void createTables();
+
 }
