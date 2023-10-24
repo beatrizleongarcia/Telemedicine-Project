@@ -5,12 +5,14 @@
 package Client;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
  * @author maria
  */
-public class Patient implements Serializable{
+public class Patient implements Serializable {
 
     private String name;
     private String lastname;
@@ -18,36 +20,54 @@ public class Patient implements Serializable{
     private String gender;
     private String email;
     private String username;
-    private String password;
+    private byte[] password;
     private String MAC;
 
     public Patient() {
     }
 
     public Patient(Integer id, String name, String lastname, String gender, String email, String username, String password, String MAC) {
-        this.name = name;
-        this.lastname = lastname;
-        this.id = id;
-        this.gender = gender;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.MAC = MAC;
+        try {
+            this.name = name;
+            this.lastname = lastname;
+            this.id = id;
+            this.gender = gender;
+            this.email = email;
+            this.username = username;
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            this.password = md.digest();
+            this.MAC = MAC;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     public Patient(String name, String lastname, String gender, String email, String username, String password, String MAC) {
-        this.name = name;
-        this.lastname = lastname;
-        this.gender = gender;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.MAC = MAC;
+        try {
+            this.name = name;
+            this.lastname = lastname;
+            this.gender = gender;
+            this.email = email;
+            this.username = username;
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            this.password = md.digest();
+            this.MAC = MAC;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     public Patient(String username, String password) {
-        this.username = username;
-        this.password = password;
+        try {
+            this.username = username;
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            this.password = md.digest();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getName() {
@@ -98,11 +118,11 @@ public class Patient implements Serializable{
         this.username = username;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 
@@ -110,13 +130,13 @@ public class Patient implements Serializable{
         return MAC;
     }
 
-
     public void setMAC(String MAC) {
         this.MAC = MAC;
     }
 
     @Override
     public String toString() {
+        //To do
         return "Patient{" + "name=" + name + ", lastname=" + lastname + ", id=" + id + ", gender=" + gender + ", email=" + email + ", username=" + username + ", password=" + password + ", MAC=" + MAC + '}';
     }
 }
