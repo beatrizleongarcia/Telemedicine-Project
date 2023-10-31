@@ -24,6 +24,7 @@ public class Patient implements Serializable {
     private String MAC;
 
     public Patient() {
+        super();
     }
 
     public Patient(Integer id, String name, String lastname, String gender, String email, String username, String password, String MAC) {
