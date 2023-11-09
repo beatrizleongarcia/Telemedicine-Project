@@ -39,8 +39,8 @@ public class JDBCECGManager implements ECGManager {
             prep.setInt(3, ecg.getPatient_id());
             prep.executeUpdate();
             prep.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,8 +63,10 @@ public class JDBCECGManager implements ECGManager {
                 ArrayList<Integer> ecgList = (ArrayList<Integer>) ois.readObject();
                 ecg = new ECG(id, ecgList, observations, patient_id);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            rs.close();
+            prep.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -79,11 +81,94 @@ public class JDBCECGManager implements ECGManager {
         try {
             String sql = "SELECT * FROM ECG WHERE patientId = ?";
             PreparedStatement prep = c.prepareStatement(sql);
-            prep.setInt(1, id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            prep.setInt(1, patient_id);
+            ResultSet rs = prep.executeQuery();
+            if (rs.next()) {
+                String observations = rs.getString("observation");
+                int id = rs.getInt("id");
+                byte[] bytes = rs.getBytes("ecg");
+                ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+                ObjectInputStream ois = new ObjectInputStream(bis);
+                ArrayList<Integer> ecgList = (ArrayList<Integer>) ois.readObject();
+                ECG ecg = new ECG(id, ecgList, observations, patient_id);
+                ecgs.add(ecg);
+            }
+            rs.close();
+            prep.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ecgs;
+    }
+
+    @Override
+    public ArrayList<ECG> findECGByObservationFragment(Connection c, String text) {
+        ArrayList<ECG> ecgs = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM ECG WHERE observation = *?*";
+            PreparedStatement prep = c.prepareStatement(sql);
+            prep.setString(1, text);
+            ResultSet rs = prep.executeQuery();
+            if (rs.next()) {
+                String observations = rs.getString("observation");
+                int id = rs.getInt("id");
+                int patient_id = rs.getInt("patientId");
+                byte[] bytes = rs.getBytes("ecg");
+                ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+                ObjectInputStream ois = new ObjectInputStream(bis);
+                ArrayList<Integer> ecgList = (ArrayList<Integer>) ois.readObject();
+                ECG ecg = new ECG(id, ecgList, observations, patient_id);
+                ecgs.add(ecg);
+            }
+            rs.close();
+            prep.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ecgs;
+    }
+
+    @Override
+    public void deleteECG(Connection c, int id) {
+        try {
+            String sql = "DELETE FROM ECG WHERE id = ?";
+            PreparedStatement prep = c.prepareStatement(sql);
+            prep.setInt(1, id);
+            prep.executeUpdate();
+            prep.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void setECG(Connection c, ECG ecg, int id) {
+        try {
+            String sql = "UPDATE ECG SET observation = ?, ecg = ?, patientId = ? WHERE id = ?";
+            PreparedStatement prep = c.prepareStatement(sql);
+            prep.setString(1, ecg.getObservations());
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bos);
+            out.writeObject(ecg.getEcg());
+            byte[] bytes = bos.toByteArray();
+            prep.setBytes(2, bytes);//Revisar que esté bien
+            prep.setInt(3, ecg.getPatient_id());
+            prep.setInt(4, id);
+            prep.executeUpdate();
+            prep.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JDBCECGManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

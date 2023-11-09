@@ -19,4 +19,10 @@ public interface ECGManager {
     public ECG findECG(Connection c, int id);
 
     public ArrayList<ECG> findECGByPatient(Connection c, int patient_id);
+
+    public ArrayList<ECG> findECGByObservationFragment(Connection c, String text);
+
+    public void deleteECG(Connection c, int id);
+
+    public void setECG(Connection c, ECG ecg, int id);
 }
