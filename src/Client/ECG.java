@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author maria
  */
 public class ECG {
+
     private Integer id;
     private ArrayList<Integer> ecg = new ArrayList<>();
     private String observations;
@@ -29,11 +30,15 @@ public class ECG {
         this.patient_id = patient_id;
     }
 
-    
+    public ECG(Integer id, String observations, int patient_id) {
+        this.id = id;
+        this.observations = observations;
+        this.patient_id = patient_id;
+    }
+
     public ArrayList<Integer> getEcg() {
         return ecg;
     }
-
 
     public String getObservations() {
         return observations;
