@@ -4,13 +4,20 @@
  */
 package GUI;
 
+import Client.SocketObject;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 /**
  *
  * @author maria
  */
-public class LogIn extends javax.swing.JPanel implements java.beans.Customizer {
+public class LogIn extends javax.swing.JPanel implements WindowListener {
 
-    private Object bean;
+    //
+    private SocketObject socket; //necesitamos un socket para acda conexión que queramos hacer
+    private LogIn login; 
+    public MenuGUI menu; 
 
     /**
      * Creates new customizer LogIn
@@ -18,12 +25,20 @@ public class LogIn extends javax.swing.JPanel implements java.beans.Customizer {
     public LogIn() {
         initComponents();
     }
-
-    @Override
-    public void setObject(Object bean) {
-        this.bean = bean;
+    
+    public LogIn(SocketObject socket) {
+        this.socket = socket;
+        initComponents();
     }
 
+    public void setLogin(LogIn login) {
+        this.login = login;
+    }
+    public LogIn getLogin() {
+        return login;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,4 +148,39 @@ public class LogIn extends javax.swing.JPanel implements java.beans.Customizer {
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JTextField jUsername;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

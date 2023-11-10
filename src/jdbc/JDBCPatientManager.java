@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class JDBCPatientManager implements PatientManager {
 
-    private JDBCManager manager;
+    private final JDBCManager manager;
 
     public JDBCPatientManager(JDBCManager m) {
         this.manager = m;
