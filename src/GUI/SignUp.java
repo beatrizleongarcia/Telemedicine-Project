@@ -84,6 +84,14 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -235,9 +243,18 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
         setPassword(sb.toString());
     }
 
+    private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {
+        setUsername(UsernameField.getText());
+    }
+
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
     }
+
+    private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField EmailField;
     private javax.swing.JButton Exit;

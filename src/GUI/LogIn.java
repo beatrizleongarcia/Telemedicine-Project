@@ -18,6 +18,8 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
     private SocketObject socket; //necesitamos un socket para acda conexión que queramos hacer
     private LogIn login;
     public MenuGUI menu;
+    private String username;
+    private String password;
 
     /**
      * Creates new customizer LogIn
@@ -37,6 +39,22 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
 
     public LogIn getLogin() {
         return login;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -139,6 +157,23 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
+
+    private void jUsernameActionPerformed(java.awt.event.ActionEvent evt) {
+        setUsername(jUsername.getText());
+    }
+
+    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {
+        char[] arregloContraseña = jPassword.getPassword();
+        StringBuilder sb = new StringBuilder();
+        for (char c : arregloContraseña) {
+            sb.append(c);
+        }
+        setPassword(sb.toString());
+    }
+
+    private void LogInActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Exit;
