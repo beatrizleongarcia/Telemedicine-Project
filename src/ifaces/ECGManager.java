@@ -5,7 +5,6 @@
 package ifaces;
 
 import Client.ECG;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -14,15 +13,15 @@ import java.util.ArrayList;
  */
 public interface ECGManager {
 
-    public void addECG(ECG ecg, Connection c);
+    public void addECG(ECG ecg);
 
-    public ECG findECG(Connection c, int id);
+    public ECG findECG(int id);
 
-    public ArrayList<ECG> findECGByPatient(Connection c, int patient_id);
+    public ArrayList<ECG> findECGByPatient(int patient_id);
 
-    public ArrayList<ECG> findECGByObservationFragment(Connection c, String text);
+    public ArrayList<ECG> findECGByObservationFragment(String text);
 
-    public void deleteECG(Connection c, int id);
+    public void deleteECG(int id);
 
-    public void setECG(Connection c, ECG ecg, int id);
+    public void setECG(ECG ecg, int id);
 }

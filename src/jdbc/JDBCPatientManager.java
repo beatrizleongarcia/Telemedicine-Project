@@ -6,65 +6,81 @@ package jdbc;
 
 import Client.Patient;
 import ifaces.PatientManager;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author maria
  */
 public class JDBCPatientManager implements PatientManager {
+
     private JDBCManager manager;
-    
-    public JDBCPatientManager(JDBCManager m){
-        this.manager=m;
+
+    public JDBCPatientManager(JDBCManager m) {
+        this.manager = m;
     }
-    
+
+    @Override
     public void addPatient(Patient p) {
-		try {
-			String sql = "INSERT INTO patients (name, lastname, gender, email, username, password, MAC) VALUES (?,?,?,?,?,?,?)";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setString(1, p.getName());
-			prep.setString(2, p.getLastname());
-			prep.setString(3, p.getGender());
-			prep.setString(4, p.getEmail());
-			prep.setString(5, p.getUsername());
-                        //prep.setByte(6, p.getPassword());
-                        prep.setString(7, p.getMAC());
-			prep.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-    
+        try {
+            String sql = "INSERT INTO patients (name, lastname, gender, email, username, password, MAC) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+            prep.setString(1, p.getName());
+            prep.setString(2, p.getLastname());
+            prep.setString(3, p.getGender());
+            prep.setString(4, p.getEmail());
+            prep.setString(5, p.getUsername());
+            prep.setBytes(6, p.getPassword());
+            prep.setString(7, p.getMAC());
+            prep.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
     public Patient searchPatient(String username, String password) {
-		Patient p = null;
-		try {
-			Statement stmt = manager.getConnection().createStatement();
-			String sql = "SELECT * FROM patients WHERE username=" + username + "AND password=" + password;
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-                            int id = rs.getInt("id");
-                            String name = rs.getString("name");
-                            String lastname = rs.getString("lastname");
-                            String gender = rs.getString("gender");
-                            String email = rs.getString("email");
-                            String MAC = rs.getString("MAC");
-                            p = new Patient(id, name, lastname, gender, email, username, password, MAC);
-			}
-			rs.close();
-			stmt.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return p;
-	}
-    
-    public boolean verifyUsername (String username) {
+        Patient p = null;
+        try {
+            String sql = "SELECT * FROM patients WHERE username = ? AND password = ?";
+            PreparedStatement stmt = manager.getConnection().prepareStatement(sql);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] hash = md.digest();
+            stmt.setString(1, username);
+            stmt.setBytes(2, hash);
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String lastname = rs.getString("lastname");
+                String gender = rs.getString("gender");
+                String email = rs.getString("email");
+                String MAC = rs.getString("MAC");
+                p = new Patient(id, name, lastname, gender, email, username, password, MAC);
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
+    }
+
+    @Override
+    public boolean verifyUsername(String username) {
         boolean usernameExists = false; // En principio no existe
 
         // Consulta SQL para verificar la existencia del usuario
@@ -86,9 +102,10 @@ public class JDBCPatientManager implements PatientManager {
 
         return usernameExists; // Devuelve true o false
     }
-    
+
+    @Override
     public boolean verifyPassword(String username, String passwordIntroduced) {
-        boolean contraseñaCorrecta = false; // Se inicializa como false
+        boolean contrasenaCorrecta = false; // Se inicializa como false
 
         // Consulta SQL para verificar la contraseña
         String sql = "SELECT contraseña FROM patient WHERE username = ?";
@@ -101,42 +118,70 @@ public class JDBCPatientManager implements PatientManager {
                 // Ejecutar la consulta
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                        String passwordSaved = resultSet.getString("contraseña");
+                        byte[] passwordSaved = resultSet.getBytes("contraseña");
 
                         // Verificar si la contraseña introducida coincide con la almacenada
-                        contraseñaCorrecta = passwordSaved.equals(passwordIntroduced);
+                        MessageDigest md = MessageDigest.getInstance("MD5");
+                        md.update(passwordIntroduced.getBytes());
+                        byte[] hash = md.digest();
+                        contrasenaCorrecta = Arrays.equals(passwordSaved, hash);
                     }
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error al verificar la contraseña: " + e.getMessage());
         }
 
-        return contraseñaCorrecta; // Devuelve true si la contraseña es correcta, false en caso contrario
+        return contrasenaCorrecta; // Devuelve true si la contraseña es correcta, false en caso contrario
     }
-    
+
+    @Override
     public List<Patient> listAllPatients() {
-        List<Patient> patients = new ArrayList<Patient>();
+        List<Patient> patients = new ArrayList<>();
         try {
-                Statement stmt = manager.getConnection().createStatement();
-                String sql = "SELECT * FROM patients";
-                ResultSet rs = stmt.executeQuery(sql);
-                while (rs.next()) {
-                    Integer id = rs.getInt("id");
-                    String name = rs.getString("name");
-                    String lastname = rs.getString("lastname");
-                    String gender = rs.getString("gender");
-                    String email = rs.getString("email");
-                    Patient p = new Patient(id, name, lastname, gender, email);
-                    patients.add(p);
-                }
+            Statement stmt = manager.getConnection().createStatement();
+            String sql = "SELECT * FROM patients";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String name = rs.getString("name");
+                String lastname = rs.getString("lastname");
+                String gender = rs.getString("gender");
+                String email = rs.getString("email");
+                Patient p = new Patient(id, name, lastname, gender, email);
+                patients.add(p);
+            }
 
-                rs.close();
-                stmt.close();
+            rs.close();
+            stmt.close();
 
-        } catch (Exception e) {
-                e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return patients;
+    }
+
+    @Override
+    public void changePassword(String username, String oldPassword, String newPassword) {
+        if (!verifyPassword(username, oldPassword)) {
+            System.out.println("ERROR: Username and/or current password are not correct");
+        } else {
+            try {
+                String sql = "UPDATE Patient SET password = ? WHEN username = ?";
+                PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(newPassword.getBytes());
+                byte[] hash = md.digest();
+                prep.setBytes(1, hash);
+                prep.setString(2, username);
+                prep.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

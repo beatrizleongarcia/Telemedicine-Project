@@ -11,7 +11,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,11 +24,17 @@ import java.util.logging.Logger;
  */
 public class JDBCECGManager implements ECGManager {
 
+    private JDBCManager manager;
+
+    public JDBCECGManager(JDBCManager manager) {
+        this.manager = manager;
+    }
+
     @Override
-    public void addECG(ECG ecg, Connection c) {
+    public void addECG(ECG ecg) {
         try {
             String sql = "INSERT INTO ECG (observation, ecg, patientId) VALUES (?, ?, ?)";
-            PreparedStatement prep = c.prepareStatement(sql);
+            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
             prep.setString(1, ecg.getObservations());
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bos);
@@ -47,11 +52,11 @@ public class JDBCECGManager implements ECGManager {
     }
 
     @Override
-    public ECG findECG(Connection c, int id) {
+    public ECG findECG(int id) {
         ECG ecg = null;
         try {
             String sql = "SELECT * FROM ECG WHERE id = ?";
-            PreparedStatement prep = c.prepareStatement(sql);
+            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
             prep.setInt(1, id);
             ResultSet rs = prep.executeQuery();
             if (rs.next()) {
@@ -76,11 +81,11 @@ public class JDBCECGManager implements ECGManager {
     }
 
     @Override
-    public ArrayList<ECG> findECGByPatient(Connection c, int patient_id) {
+    public ArrayList<ECG> findECGByPatient(int patient_id) {
         ArrayList<ECG> ecgs = new ArrayList<>();
         try {
             String sql = "SELECT * FROM ECG WHERE patientId = ?";
-            PreparedStatement prep = c.prepareStatement(sql);
+            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
             prep.setInt(1, patient_id);
             ResultSet rs = prep.executeQuery();
             if (rs.next()) {
@@ -106,11 +111,11 @@ public class JDBCECGManager implements ECGManager {
     }
 
     @Override
-    public ArrayList<ECG> findECGByObservationFragment(Connection c, String text) {
+    public ArrayList<ECG> findECGByObservationFragment(String text) {
         ArrayList<ECG> ecgs = new ArrayList<>();
         try {
             String sql = "SELECT * FROM ECG WHERE observation = *?*";
-            PreparedStatement prep = c.prepareStatement(sql);
+            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
             prep.setString(1, text);
             ResultSet rs = prep.executeQuery();
             if (rs.next()) {
@@ -137,10 +142,10 @@ public class JDBCECGManager implements ECGManager {
     }
 
     @Override
-    public void deleteECG(Connection c, int id) {
+    public void deleteECG(int id) {
         try {
             String sql = "DELETE FROM ECG WHERE id = ?";
-            PreparedStatement prep = c.prepareStatement(sql);
+            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
             prep.setInt(1, id);
             prep.executeUpdate();
             prep.close();
@@ -150,10 +155,10 @@ public class JDBCECGManager implements ECGManager {
     }
 
     @Override
-    public void setECG(Connection c, ECG ecg, int id) {
+    public void setECG(ECG ecg, int id) {
         try {
             String sql = "UPDATE ECG SET observation = ?, ecg = ?, patientId = ? WHERE id = ?";
-            PreparedStatement prep = c.prepareStatement(sql);
+            PreparedStatement prep = manager.getConnection().prepareStatement(sql);
             prep.setString(1, ecg.getObservations());
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bos);
