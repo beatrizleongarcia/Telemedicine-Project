@@ -18,14 +18,14 @@ import javax.swing.JButton;
  * @author maria
  */
 public class MenuGUI extends javax.swing.JPanel implements WindowListener {
-    
+
     private Object bean;
     private SocketObject socket;
     private MenuGUI menu;
-    
+
     public LogIn login;
     public SignUp signup;
-    
+
     public JButton getLoginbutton() {
         return LogInButton;
     }
@@ -38,11 +38,11 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
      * Creates new customizer MenuGUI
      */
     public MenuGUI(SocketObject socket) {
-        this.socket=socket;
+        this.socket = socket;
         initComponents(); //inicia componentes gráficos de la ventana
         addWindowListener(this); //lo implementa la clase
     }
-    
+
     public MenuGUI() {
         addWindowListener(this);
     }
@@ -58,32 +58,45 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
         jLabel1 = new javax.swing.JLabel();
         SignUpButton = new javax.swing.JButton();
         LogInButton = new javax.swing.JButton();
+        Exit = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 255, 204));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel1.setText("Welcome");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 400, -1));
-        jLabel1.getAccessibleContext().setAccessibleName("Welcome");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 110, -1));
         jLabel1.getAccessibleContext().setAccessibleDescription("");
 
         SignUpButton.setText("Sign up");
         add(SignUpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, -1, -1));
-        SignUpButton.getAccessibleContext().setAccessibleName("Sign up");
 
         LogInButton.setText("Log in");
         add(LogInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
+
+        Exit.setBackground(new java.awt.Color(204, 204, 204));
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
+        add(Exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 50, 15));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Exit;
     private javax.swing.JButton LogInButton;
     private javax.swing.JButton SignUpButton;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
-    private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {
         login = new LogIn(socket);
         login.setLogin(login);
         login.setVisible(true);//se muestra ventana
@@ -94,11 +107,11 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
             Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.menu.setVisible(false);//  se oculta ventana actual
-    }                                           
+    }
 
-    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        //signup = new SignUp(socket);
-        //signup.setSignUp(signup);
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        signup = new SignUp(socket);
+        signup.setSignup(signup);
         signup.setVisible(true);
         int option = 1;
         try {
@@ -107,7 +120,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
             Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.menu.setVisible(false);
-    }                                            
+    }
 
     /**
      * @param args the command line arguments
@@ -116,7 +129,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -150,11 +163,11 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
     public void setMenu(MenuGUI menu) {
         this.menu = menu;
     }
+
     public MenuGUI getMenu() {
         return menu;
     }
 
-    
     @Override
     public void windowOpened(WindowEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
