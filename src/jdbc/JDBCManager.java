@@ -16,7 +16,11 @@ import java.sql.Statement;
  */
 public class JDBCManager implements Manager {
 
-    private Connection c;
+    private Connection c=null;
+    
+    public Connection getConnection() {
+		return c;
+	}
 
     @Override
     public void connect() {

@@ -9,5 +9,5 @@ package ifaces;
  * @author maria
  */
 public interface PatientManager {
-
+    
 }

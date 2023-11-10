@@ -59,6 +59,14 @@ public class Patient implements Serializable {
             e.printStackTrace();
         }
     }
+    
+    public Patient(int id, String name, String lastname, String gender, String email) {
+        this.id= id;
+        this.name = name;
+        this.lastname = lastname;
+        this.gender = gender;
+        this.email = email;
+    }
 
     public Patient(String username, String password) {
         try {
