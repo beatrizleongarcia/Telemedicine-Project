@@ -113,7 +113,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {
         manager.connect();
-        signup = new SignUp(socket);
+        signup = new SignUp(socket, manager);
         signup.setSignup(signup);
         signup.setVisible(true);
         int option = 1;

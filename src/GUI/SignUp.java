@@ -7,6 +7,10 @@ package GUI;
 import Client.SocketObject;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jdbc.JDBCManager;
+import jdbc.JDBCPatientManager;
 
 /**
  *
@@ -23,6 +27,9 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
     private String email;
     private String username;
     private String password;
+    private JDBCPatientManager patientManager;
+    private JDBCManager manager;
+    private MenuAfterLogIn menuAfter;
 
     /**
      * Creates new customizer SignUp
@@ -31,8 +38,9 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
         initComponents();
     }
 
-    public SignUp(SocketObject socket) {
+    public SignUp(SocketObject socket, JDBCManager manager) {
         this.socket = socket;
+        this.manager = manager;
         initComponents();
     }
 
@@ -248,11 +256,25 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
     }
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {
+        manager.disconnect();
         System.exit(0);
     }
 
     private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        patientManager = new JDBCPatientManager(manager);
+        boolean userCheck = patientManager.verifyUsername(username);
+        if (!userCheck) {//if the username is correct(exists)
+            menuAfter = new MenuAfterLogIn(socket, manager, patientManager);
+            menuAfter.setMenuAfterLogIn(menuAfter);
+            menuAfter.setVisible(true);
+            this.signup.setVisible(false);//for closing the current window
+        } else {//if the username does exist
+            try {
+                throw new Exception("Incorrect username or password");
+            } catch (Exception ex) {
+                Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

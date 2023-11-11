@@ -163,7 +163,7 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
-        // TODO add your handling code here:
+        manager.disconnect();
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
@@ -190,7 +190,7 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
             this.login.setVisible(false);//for closing the current window
         } else {
             try {
-                throw new Exception("Incorrect user or password");
+                throw new Exception("Incorrect username or password");
             } catch (Exception ex) {
                 Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
             }
