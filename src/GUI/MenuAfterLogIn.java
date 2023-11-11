@@ -5,14 +5,34 @@
  */
 package GUI;
 
+import Client.SocketObject;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import jdbc.JDBCManager;
+import jdbc.JDBCPatientManager;
 
 /**
  *
  * @author angel
  */
 public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener {
+
+    private SocketObject socket;
+    private LogIn login;
+    public MenuGUI menu;
+    public MenuAfterLogIn menuAfterLogIn;
+    private JDBCManager jdbcmanager;
+    private JDBCPatientManager jdbcpatientmanager;
+
+    public MenuAfterLogIn(SocketObject socket, JDBCManager jdbcmanager, JDBCPatientManager jdbcpatientmanager) {
+        this.socket = socket;
+        this.jdbcmanager = jdbcmanager;
+        this.jdbcpatientmanager = jdbcpatientmanager;
+    }
+
+    public void setMenuAfterLogIn(MenuAfterLogIn menuAfterLogIn) {
+        this.menuAfterLogIn = menuAfterLogIn;
+    }
 
     /**
      * Creates new form MenuAfterLogIn
