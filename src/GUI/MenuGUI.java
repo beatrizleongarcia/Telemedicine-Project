@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import jdbc.JDBCManager;
 
 /**
  *
@@ -22,7 +23,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
     private Object bean;
     private SocketObject socket;
     private MenuGUI menu;
-
+    private JDBCManager manager;
     public LogIn login;
     public SignUp signup;
 
@@ -85,7 +86,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
-        // TODO add your handling code here:
+
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
@@ -97,7 +98,8 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
     // End of variables declaration//GEN-END:variables
 
     private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {
-        login = new LogIn(socket);
+        manager.connect();
+        login = new LogIn(socket, manager);
         login.setLogin(login);
         login.setVisible(true);//se muestra ventana
         int option = 2;
@@ -110,6 +112,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
     }
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        manager.connect();
         signup = new SignUp(socket);
         signup.setSignup(signup);
         signup.setVisible(true);

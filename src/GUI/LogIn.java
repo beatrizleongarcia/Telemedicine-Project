@@ -7,6 +7,10 @@ package GUI;
 import Client.SocketObject;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jdbc.JDBCManager;
+import jdbc.JDBCPatientManager;
 
 /**
  *
@@ -20,6 +24,9 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
     public MenuGUI menu;
     private String username;
     private String password;
+    private JDBCPatientManager patientManager;
+    private JDBCManager manager;
+    public MenuAfterLogIn menuAfter;
 
     /**
      * Creates new customizer LogIn
@@ -28,9 +35,11 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
         initComponents();
     }
 
-    public LogIn(SocketObject socket) {
+    public LogIn(SocketObject socket, JDBCManager manager) {
         this.socket = socket;
+        this.manager = manager;
         initComponents();
+
     }
 
     public void setLogin(LogIn login) {
@@ -172,7 +181,20 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
     }
 
     private void LogInActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        patientManager = new JDBCPatientManager(manager);
+        boolean passwordCheck = patientManager.verifyPassword(username, password);
+        if (passwordCheck) {//if the password is correct
+            menuAfter = new MenuAfterLogIn(socket, manager, patientManager);
+            menuAfter.setMenuAfterLogIn(menuAfter);
+            menuAfter.setVisible(true);
+            this.login.setVisible(false);//for closing the current window
+        } else {
+            try {
+                throw new Exception("Incorrect user or password");
+            } catch (Exception ex) {
+                Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
