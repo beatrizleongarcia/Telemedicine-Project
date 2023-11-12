@@ -59,7 +59,7 @@ public class RecordECG extends javax.swing.JPanel implements WindowListener {
         jLabel2 = new javax.swing.JLabel();
         RecordingButton = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(102, 255, 204));
+        setBackground(new java.awt.Color(153, 255, 204));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Place the electrodes correctly and press the Start button when you are ready");

@@ -61,7 +61,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
         LogInButton = new javax.swing.JButton();
         Exit = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(102, 255, 204));
+        setBackground(new java.awt.Color(153, 255, 204));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
