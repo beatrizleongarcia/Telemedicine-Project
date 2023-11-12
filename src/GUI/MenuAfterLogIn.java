@@ -5,9 +5,15 @@
  */
 package GUI;
 
+import Client.ECG;
+import Client.Patient;
 import Client.SocketObject;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jdbc.JDBCManager;
 import jdbc.JDBCPatientManager;
 
@@ -23,6 +29,9 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
     public MenuAfterLogIn menuAfterLogIn;
     private JDBCManager jdbcmanager;
     private JDBCPatientManager jdbcpatientmanager;
+    private RecordECG record;
+    private Patient patient;
+    private SignalsRegistered signalsregistered;
 
     public MenuAfterLogIn(SocketObject socket, JDBCManager jdbcmanager, JDBCPatientManager jdbcpatientmanager) {
         this.socket = socket;
@@ -54,7 +63,6 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         ViewMyData = new javax.swing.JButton();
-        ModifyData = new javax.swing.JButton();
         RecordECG = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
@@ -73,8 +81,6 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
             }
         });
 
-        ModifyData.setText("Modify data");
-
         RecordECG.setText("Record ECG");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -85,21 +91,17 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
                 .addGap(117, 117, 117)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(RecordECG, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(ModifyData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ViewMyData, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
+                    .addComponent(ViewMyData, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
                 .addContainerGap(158, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(106, 106, 106)
                 .addComponent(ViewMyData, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ModifyData, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(RecordECG)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -117,18 +119,44 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void ViewMyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewMyDataActionPerformed
-        // TODO add your handling code here:
+        int option = 1; //opcion 2 en DESIGN es 
+        try {
+            socket.getOutputStream().write(option); 
+        } catch (IOException ex) {
+            Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.menuAfterLogIn.setVisible(false); //cerramos la ventana
+        ArrayList<ECG> ecg = new ArrayList<>(); //creamos arraylist
+        try {
+            socket.getOutputStream().write(patient.getId()); //pasamos el id del paciente
+            int size = socket.getInputStream().read(); //leemos el tamaño de los ecg
+            for (int i = 0; i < size; i++) { 
+                ecg.add((ECG) socket.getObjectInputStream().readObject()); //vamos añadiendo al arraylist los ecg que leamos
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MenuAfterLogIn.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MenuAfterLogIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //signalsregistered = new SignalsRegistered(socket, patient,ecg); //TO DO CLASE SIGNALS REGISTERED PASANDOLE EL ARRAYLIST CON EL PACIENTE Y EL SOCKET PARA LA CONEXION
+        //signalsregistered.setSignalsRegistered(signalsregistered);
+        //signalsregistered.setVisible(true);
     }//GEN-LAST:event_ViewMyDataActionPerformed
 
-    private void ModifyDataActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
 
     private void RecordECGActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        record = new RecordECG(socket, patient); 
+        record.setRecord(record); 
+        record.setVisible(true); //abrimos ventana
+        int option = 2; //opción 2 que es grabar la señal en DESIGN
+        try {
+            socket.getOutputStream().write(option);
+        } catch (IOException ex) {
+            Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }// TODO add your handling code here:
+        this.menuAfterLogIn.setVisible(false); //cerramos ventana
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ModifyData;
     private javax.swing.JButton RecordECG;
     private javax.swing.JButton ViewMyData;
     private javax.swing.JLabel jLabel1;
