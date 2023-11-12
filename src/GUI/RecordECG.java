@@ -23,12 +23,12 @@ import javax.swing.JOptionPane;
  * @author maria
  */
 public class RecordECG extends javax.swing.JPanel implements WindowListener {
-    
+
     public MenuAfterLogIn menu;
-    ECG ecg;  
-    private SocketObject socket; 
-    private Patient patient; 
-    private RecordECG record; 
+    ECG ecg;
+    private SocketObject socket;
+    private Patient patient;
+    private RecordECG record;
     //habria que guardar la señal de alguna forma
 
     /**
@@ -37,7 +37,7 @@ public class RecordECG extends javax.swing.JPanel implements WindowListener {
     public RecordECG() {
         initComponents();
     }
-    
+
     public RecordECG(SocketObject socket, Patient patient) {
         this.socket = socket;
         this.patient = patient;
@@ -99,14 +99,14 @@ public class RecordECG extends javax.swing.JPanel implements WindowListener {
     private void RecordingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecordingButtonActionPerformed
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd__HH_mm_ss"); //se crea el formato fecha y hora AÑO, MES, DIA y HORA MINUTO SEGUNDO
-        LocalDateTime current_time = LocalDateTime.now(); //fecha y hora tal cual se graba 
+        LocalDateTime current_time = LocalDateTime.now(); //fecha y hora tal cual se graba
         String date = (String) dtf.format(current_time); //cast a string
-        
-        BitalinoDemo bitalinoDemo = new BitalinoDemo(); 
+
+        BitalinoDemo bitalinoDemo = new BitalinoDemo();
         bitalinoDemo.recordSignal(patient.getMAC()); //COGEMOS MAC ADDRESS DEL PACIENTE
-        
-        ArrayList<Integer> ecg_lista = bitalinoDemo.getList();  
-        
+
+        ArrayList<Integer> ecg_lista = bitalinoDemo.getList();
+
         if (!ecg_lista.isEmpty()) {
             ecg = new ECG(ecg_lista, patient.getId(), date);
             try {
@@ -115,21 +115,22 @@ public class RecordECG extends javax.swing.JPanel implements WindowListener {
                 System.out.println("Can't establish a connection");
                 Logger.getLogger(RecordECG.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.record.setVisible(false); 
+            this.record.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "The bitalino is not connected properly. "
                     + "Check connection.");
         }
+
     }//GEN-LAST:event_RecordingButtonActionPerformed
 
-/**
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -139,13 +140,13 @@ public class RecordECG extends javax.swing.JPanel implements WindowListener {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Record.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecordECG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Record.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecordECG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Record.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecordECG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Record.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecordECG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
