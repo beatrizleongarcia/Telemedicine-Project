@@ -141,7 +141,7 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
     private void ViewMyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewMyDataActionPerformed
         JDBCECGManager ecgManager = new JDBCECGManager(jdbcmanager);
         ArrayList<ECG> ecgs = ecgManager.findECGByPatient(patient.getId()); //creamos arraylist
-        SignalsRegistered signalsregistered = new SignalsRegistered(jdbcmanager, jdbcpatientmanager, ecgManager, socket, ecgs, patient);
+        signalsregistered = new SignalsRegistered(jdbcmanager, jdbcpatientmanager, ecgManager, socket, ecgs, patient);
         signalsregistered.setSignalsRegistered(signalsregistered);
         signalsregistered.setVisible(true);
         int option = 1; //opcion 2 en DESIGN es
