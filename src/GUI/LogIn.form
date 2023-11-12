@@ -142,10 +142,19 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Log In"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LogInActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jUsername">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jUsernameActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPassword">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

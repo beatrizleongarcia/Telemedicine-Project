@@ -70,9 +70,19 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
         jLabel1.getAccessibleContext().setAccessibleDescription("");
 
         SignUpButton.setText("Sign up");
+        SignUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignUpButtonActionPerformed(evt);
+            }
+        });
         add(SignUpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, -1, -1));
 
         LogInButton.setText("Log in");
+        LogInButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogInButtonActionPerformed(evt);
+            }
+        });
         add(LogInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
 
         Exit.setBackground(new java.awt.Color(204, 204, 204));
@@ -90,28 +100,7 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Exit;
-    private javax.swing.JButton LogInButton;
-    private javax.swing.JButton SignUpButton;
-    private javax.swing.JLabel jLabel1;
-    // End of variables declaration//GEN-END:variables
-
-    private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {
-        manager.connect();
-        login = new LogIn(socket, manager);
-        login.setLogin(login);
-        login.setVisible(true);//se muestra ventana
-        int option = 2;
-        try {
-            socket.getOutputStream().write(option);
-        } catch (IOException ex) {
-            Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.menu.setVisible(false);//  se oculta ventana actual
-    }
-
-    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
         manager.connect();
         signup = new SignUp(socket, manager);
         signup.setSignup(signup);
@@ -123,7 +112,28 @@ public class MenuGUI extends javax.swing.JPanel implements WindowListener {
             Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.menu.setVisible(false);
-    }
+    }//GEN-LAST:event_SignUpButtonActionPerformed
+
+    private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
+        manager.connect();
+        login = new LogIn(socket, manager);
+        login.setLogin(login);
+        login.setVisible(true);//se muestra ventana
+        int option = 2;
+        try {
+            socket.getOutputStream().write(option);
+        } catch (IOException ex) {
+            Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.menu.setVisible(false);//  se oculta ventana actual
+    }//GEN-LAST:event_LogInButtonActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Exit;
+    private javax.swing.JButton LogInButton;
+    private javax.swing.JButton SignUpButton;
+    private javax.swing.JLabel jLabel1;
+    // End of variables declaration//GEN-END:variables
 
     /**
      * @param args the command line arguments

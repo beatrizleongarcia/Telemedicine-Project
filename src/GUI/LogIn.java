@@ -111,6 +111,23 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
 
         LogIn.setBackground(new java.awt.Color(204, 204, 204));
         LogIn.setText("Log In");
+        LogIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogInActionPerformed(evt);
+            }
+        });
+
+        jUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jUsernameActionPerformed(evt);
+            }
+        });
+
+        jPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,20 +184,20 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
-    private void jUsernameActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUsernameActionPerformed
         setUsername(jUsername.getText());
-    }
+    }//GEN-LAST:event_jUsernameActionPerformed
 
-    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
         char[] arregloContraseña = jPassword.getPassword();
         StringBuilder sb = new StringBuilder();
         for (char c : arregloContraseña) {
             sb.append(c);
         }
         setPassword(sb.toString());
-    }
+    }//GEN-LAST:event_jPasswordActionPerformed
 
-    private void LogInActionPerformed(java.awt.event.ActionEvent evt) {
+    private void LogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInActionPerformed
         patientManager = new JDBCPatientManager(manager);
         boolean passwordCheck = patientManager.verifyPassword(username, password);
         if (passwordCheck) {//if the password is correct
@@ -195,7 +212,7 @@ public class LogIn extends javax.swing.JPanel implements WindowListener {
                 Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    }//GEN-LAST:event_LogInActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Exit;

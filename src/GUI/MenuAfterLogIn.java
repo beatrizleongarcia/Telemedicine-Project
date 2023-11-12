@@ -82,6 +82,11 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
         });
 
         RecordECG.setText("Record ECG");
+        RecordECG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RecordECGActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,9 +124,9 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void ViewMyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewMyDataActionPerformed
-        int option = 1; //opcion 2 en DESIGN es 
+        int option = 1; //opcion 2 en DESIGN es
         try {
-            socket.getOutputStream().write(option); 
+            socket.getOutputStream().write(option);
         } catch (IOException ex) {
             Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,7 +135,7 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
         try {
             socket.getOutputStream().write(patient.getId()); //pasamos el id del paciente
             int size = socket.getInputStream().read(); //leemos el tamaño de los ecg
-            for (int i = 0; i < size; i++) { 
+            for (int i = 0; i < size; i++) {
                 ecg.add((ECG) socket.getObjectInputStream().readObject()); //vamos añadiendo al arraylist los ecg que leamos
             }
         } catch (IOException ex) {
@@ -143,10 +148,9 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
         //signalsregistered.setVisible(true);
     }//GEN-LAST:event_ViewMyDataActionPerformed
 
-
-    private void RecordECGActionPerformed(java.awt.event.ActionEvent evt) {
-        record = new RecordECG(socket, patient); 
-        record.setRecord(record); 
+    private void RecordECGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecordECGActionPerformed
+        record = new RecordECG(socket, patient);
+        record.setRecord(record);
         record.setVisible(true); //abrimos ventana
         int option = 2; //opción 2 que es grabar la señal en DESIGN
         try {
@@ -155,7 +159,8 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
             Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
         }// TODO add your handling code here:
         this.menuAfterLogIn.setVisible(false); //cerramos ventana
-    }
+    }//GEN-LAST:event_RecordECGActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton RecordECG;
     private javax.swing.JButton ViewMyData;
