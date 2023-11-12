@@ -113,7 +113,7 @@ public class RecordECG extends javax.swing.JPanel implements WindowListener {
                 socket.getOutputStream().write(0);
             } catch (IOException ex) {
                 System.out.println("Can't establish a connection");
-                Logger.getLogger(Record.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RecordECG.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.record.setVisible(false); 
         } else {
