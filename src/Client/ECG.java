@@ -16,11 +16,17 @@ public class ECG {
     private ArrayList<Integer> ecg = new ArrayList<>();
     private String observations;
     private int patient_id;
+    private String date;
 
     public ECG(ArrayList<Integer> ecg, String observations, int patient_id) {
         this.ecg = ecg;
         this.observations = observations;
         this.patient_id = patient_id;
+    }
+    public ECG(ArrayList<Integer> ecg, int patient_id, String date) {
+        this.ecg = ecg;
+        this.patient_id = patient_id;
+        this.date=date;
     }
 
     public ECG(Integer id, ArrayList<Integer> ecg, String observations, int patient_id) {
