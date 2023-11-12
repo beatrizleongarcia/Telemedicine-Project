@@ -144,16 +144,54 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
             }
         });
 
+        LastNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LastNameFieldActionPerformed(evt);
+            }
+        });
+
         GenderBox.setEditable(true);
         GenderBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        GenderBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenderBoxActionPerformed(evt);
+            }
+        });
+
+        EmailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailFieldActionPerformed(evt);
+            }
+        });
+
+        UsernameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsernameFieldActionPerformed(evt);
+            }
+        });
 
         PasswordField.setText("jPasswordField1");
+        PasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PasswordFieldActionPerformed(evt);
+            }
+        });
 
         Exit.setBackground(new java.awt.Color(204, 204, 204));
         Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
 
         SignUp.setBackground(new java.awt.Color(204, 204, 204));
         SignUp.setText("Sign Up");
+        SignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignUpActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -226,41 +264,36 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
         setName(NameField.getText());
     }//GEN-LAST:event_NameFieldActionPerformed
 
-    private void LastNameFieldActionPerformed(java.awt.event.ActionEvent evt) {
+    private void LastNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LastNameFieldActionPerformed
         setLastname(LastNameField.getText());
-    }
+    }//GEN-LAST:event_LastNameFieldActionPerformed
 
-    private void GenderBoxActionPerformed(java.awt.event.ActionEvent evt) {
+    private void GenderBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenderBoxActionPerformed
         if (GenderBox.getSelectedItem().toString().equals("Male")) {
             setGender("M");
         } else {
             setGender("F");
         }
-    }
+    }//GEN-LAST:event_GenderBoxActionPerformed
 
-    private void EmailFieldActionPerformed(java.awt.event.ActionEvent evt) {
+    private void EmailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailFieldActionPerformed
         setEmail(EmailField.getText());
-    }
+    }//GEN-LAST:event_EmailFieldActionPerformed
 
-    private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {
+    private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameFieldActionPerformed
+        setUsername(UsernameField.getText());
+    }//GEN-LAST:event_UsernameFieldActionPerformed
+
+    private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
         char[] arregloContraseña = PasswordField.getPassword();
         StringBuilder sb = new StringBuilder();
         for (char c : arregloContraseña) {
             sb.append(c);
         }
         setPassword(sb.toString());
-    }
+    }//GEN-LAST:event_PasswordFieldActionPerformed
 
-    private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {
-        setUsername(UsernameField.getText());
-    }
-
-    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {
-        manager.disconnect();
-        System.exit(0);
-    }
-
-    private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {
+    private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
         patientManager = new JDBCPatientManager(manager);
         boolean userCheck = patientManager.verifyUsername(username);
         if (!userCheck) {//if the username is correct(exists)
@@ -275,7 +308,12 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
                 Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    }//GEN-LAST:event_SignUpActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        manager.disconnect();
+        System.exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField EmailField;
