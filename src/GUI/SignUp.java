@@ -7,6 +7,7 @@ package GUI;
 import Client.SocketObject;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.JDBCManager;
@@ -300,6 +301,12 @@ public class SignUp extends javax.swing.JPanel implements WindowListener {
             menuAfter = new MenuAfterLogIn(socket, manager, patientManager);
             menuAfter.setMenuAfterLogIn(menuAfter);
             menuAfter.setVisible(true);
+            int option = 1;
+            try {
+                socket.getOutputStream().write(option);
+            } catch (IOException ex) {
+                Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.signup.setVisible(false);//for closing the current window
         } else {//if the username does exist
             try {

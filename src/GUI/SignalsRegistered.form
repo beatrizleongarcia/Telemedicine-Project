@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.2" maxVersion="1.2" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -68,11 +68,11 @@
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" pref="264" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jTextField1" min="-2" pref="57" max="-2" attributes="0"/>
+                  <Component id="IdField" min="-2" pref="57" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="view" min="-2" max="-2" attributes="0"/>
+                  <Component id="ViewButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="117" max="32767" attributes="0"/>
-                  <Component id="exit" min="-2" max="-2" attributes="0"/>
+                  <Component id="ExitButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -90,13 +90,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="exit" min="-2" max="-2" attributes="0"/>
+                          <Component id="ExitButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="338" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="view" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="ViewButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="IdField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -122,7 +122,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable3">
+            <Component class="javax.swing.JTable" name="DataTable">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="fc" red="ff" type="rgb"/>
@@ -154,25 +154,25 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="exit">
+        <Component class="javax.swing.JButton" name="ExitButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="EXIT"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ExitButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="view">
+        <Component class="javax.swing.JButton" name="ViewButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="View"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ViewButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="IdField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IdFieldActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">

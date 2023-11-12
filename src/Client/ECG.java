@@ -13,20 +13,29 @@ import java.util.ArrayList;
 public class ECG {
 
     private Integer id;
-    private ArrayList<Integer> ecg = new ArrayList<>();
+    private ArrayList<Integer> ecg;
     private String observations;
     private int patient_id;
     private String date;
+
+    public ECG(Integer id, String observations, int patient_id, String date, ArrayList<Integer> ecg) {
+        this.id = id;
+        this.observations = observations;
+        this.patient_id = patient_id;
+        this.date = date;
+        this.ecg = ecg;
+    }
 
     public ECG(ArrayList<Integer> ecg, String observations, int patient_id) {
         this.ecg = ecg;
         this.observations = observations;
         this.patient_id = patient_id;
     }
+
     public ECG(ArrayList<Integer> ecg, int patient_id, String date) {
         this.ecg = ecg;
         this.patient_id = patient_id;
-        this.date=date;
+        this.date = date;
     }
 
     public ECG(Integer id, ArrayList<Integer> ecg, String observations, int patient_id) {
@@ -68,6 +77,14 @@ public class ECG {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override

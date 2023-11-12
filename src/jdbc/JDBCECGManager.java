@@ -33,7 +33,7 @@ public class JDBCECGManager implements ECGManager {
     @Override
     public void addECG(ECG ecg) {
         try {
-            String sql = "INSERT INTO ECG (observation, ecg, patientId) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO ECG (observation, ecg, patientId, date) VALUES (?, ?, ?, ?)";
             PreparedStatement prep = manager.getConnection().prepareStatement(sql);
             prep.setString(1, ecg.getObservations());
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -42,6 +42,7 @@ public class JDBCECGManager implements ECGManager {
             byte[] bytes = bos.toByteArray();
             prep.setBytes(2, bytes);//Revisar que esté bien
             prep.setInt(3, ecg.getPatient_id());
+            prep.setString(4, ecg.getDate());
             prep.executeUpdate();
             prep.close();
         } catch (SQLException ex) {
@@ -63,10 +64,11 @@ public class JDBCECGManager implements ECGManager {
                 String observations = rs.getString("observation");
                 int patient_id = rs.getInt("patientId");
                 byte[] bytes = rs.getBytes("ecg");
+                String date = rs.getString("date");
                 ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
                 ObjectInputStream ois = new ObjectInputStream(bis);
                 ArrayList<Integer> ecgList = (ArrayList<Integer>) ois.readObject();
-                ecg = new ECG(id, ecgList, observations, patient_id);
+                ecg = new ECG(id, observations, patient_id, date, ecgList);
             }
             rs.close();
             prep.close();
@@ -92,10 +94,11 @@ public class JDBCECGManager implements ECGManager {
                 String observations = rs.getString("observation");
                 int id = rs.getInt("id");
                 byte[] bytes = rs.getBytes("ecg");
+                String date = rs.getString("date");
                 ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
                 ObjectInputStream ois = new ObjectInputStream(bis);
                 ArrayList<Integer> ecgList = (ArrayList<Integer>) ois.readObject();
-                ECG ecg = new ECG(id, ecgList, observations, patient_id);
+                ECG ecg = new ECG(id, observations, patient_id, date, ecgList);
                 ecgs.add(ecg);
             }
             rs.close();

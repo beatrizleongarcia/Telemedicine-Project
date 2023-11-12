@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jdbc.JDBCECGManager;
 import jdbc.JDBCManager;
 import jdbc.JDBCPatientManager;
 
@@ -64,6 +65,7 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
         jPanel1 = new javax.swing.JPanel();
         ViewMyData = new javax.swing.JButton();
         RecordECG = new javax.swing.JButton();
+        ExitButton = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -88,6 +90,13 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
             }
         });
 
+        ExitButton.setText("Exit");
+        ExitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -98,11 +107,17 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
                     .addComponent(RecordECG, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                     .addComponent(ViewMyData, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
                 .addContainerGap(158, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ExitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(106, 106, 106)
+                .addContainerGap()
+                .addComponent(ExitButton)
+                .addGap(72, 72, 72)
                 .addComponent(ViewMyData, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(RecordECG)
@@ -124,6 +139,11 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void ViewMyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewMyDataActionPerformed
+        JDBCECGManager ecgManager = new JDBCECGManager(jdbcmanager);
+        ArrayList<ECG> ecgs = ecgManager.findECGByPatient(patient.getId()); //creamos arraylist
+        SignalsRegistered signalsregistered = new SignalsRegistered(jdbcmanager, jdbcpatientmanager, ecgManager, socket, ecgs, patient);
+        signalsregistered.setSignalsRegistered(signalsregistered);
+        signalsregistered.setVisible(true);
         int option = 1; //opcion 2 en DESIGN es
         try {
             socket.getOutputStream().write(option);
@@ -131,21 +151,6 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
             Logger.getLogger(MenuGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.menuAfterLogIn.setVisible(false); //cerramos la ventana
-        ArrayList<ECG> ecg = new ArrayList<>(); //creamos arraylist
-        try {
-            socket.getOutputStream().write(patient.getId()); //pasamos el id del paciente
-            int size = socket.getInputStream().read(); //leemos el tamaño de los ecg
-            for (int i = 0; i < size; i++) {
-                ecg.add((ECG) socket.getObjectInputStream().readObject()); //vamos añadiendo al arraylist los ecg que leamos
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(MenuAfterLogIn.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MenuAfterLogIn.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //signalsregistered = new SignalsRegistered(socket, patient,ecg); //TO DO CLASE SIGNALS REGISTERED PASANDOLE EL ARRAYLIST CON EL PACIENTE Y EL SOCKET PARA LA CONEXION
-        //signalsregistered.setSignalsRegistered(signalsregistered);
-        //signalsregistered.setVisible(true);
     }//GEN-LAST:event_ViewMyDataActionPerformed
 
     private void RecordECGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecordECGActionPerformed
@@ -161,7 +166,13 @@ public class MenuAfterLogIn extends javax.swing.JFrame implements WindowListener
         this.menuAfterLogIn.setVisible(false); //cerramos ventana
     }//GEN-LAST:event_RecordECGActionPerformed
 
+    private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
+        this.jdbcmanager.disconnect();
+        System.exit(0);
+    }//GEN-LAST:event_ExitButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ExitButton;
     private javax.swing.JButton RecordECG;
     private javax.swing.JButton ViewMyData;
     private javax.swing.JLabel jLabel1;
