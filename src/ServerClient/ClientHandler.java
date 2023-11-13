@@ -42,11 +42,11 @@ public class ClientHandler implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Client disconnected: " + clientSocket.getInetAddress());
+            System.out.println("Client  "  + clientSocket.getInetAddress() + "  disconnected.");
             server.removeClient(this);
         }
     }
-
+    
     // Send a message to this client
     public void sendMessage(String message) {
         try {
