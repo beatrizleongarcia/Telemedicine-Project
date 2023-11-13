@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import BITalino.BITalino;
+import BITalino.BITalinoException;
+import BITalino.Frame;
 import Client.ECG;
 import Client.Patient;
 import Client.SocketObject;
@@ -17,21 +20,18 @@ import java.util.logging.Logger;
 import jdbc.JDBCECGManager;
 import jdbc.JDBCManager;
 import jdbc.JDBCPatientManager;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import BITalino.BITalino;
-import BITalino.BITalinoException;
-import BITalino.Frame;
 
 /**
  *
  * @author angel
  */
 public class ShowSignal extends javax.swing.JFrame implements WindowListener {
+
     private XYSeries ecgSeries;
     private JFreeChart chart;
 
@@ -254,33 +254,32 @@ public class ShowSignal extends javax.swing.JFrame implements WindowListener {
 
     private void ShowPlotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowPlotButtonActionPerformed
         // TODO add your handling code here:
-    BITalino bitalino = new BITalino();
+        BITalino bitalino = new BITalino();
         try {
-        bitalino.start(new int[]{0, 1, 2, 3, 4, 5}); // Inicia la adquisición de todos los canales analógicos
-    } catch (BITalinoException e) {
-
-    }   catch (Throwable ex) {
-            Logger.getLogger(ShowSignal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    // Llamar a updateGraph() para actualizar el gráfico con los datos recibidos
-    new Thread(() -> {
-        try {
-            int numSamples = 100; // Número de muestras a leer
-            Frame[] frames = bitalino.read(numSamples);
-            
-            for (Frame frame : frames) {
-                double time = System.currentTimeMillis();
-                double voltage = frame.analog[0] * (3.0 / 1023.0); 
-                updateGraph(time, voltage);
-            }
-            // Detener la adquisición después de leer las muestras
-            bitalino.stop();
+            bitalino.start(new int[]{0, 1, 2, 3, 4, 5}); // Inicia la adquisición de todos los canales analógicos
         } catch (BITalinoException e) {
-        }
-        catch (Throwable ex) {
+
+        } catch (Throwable ex) {
             Logger.getLogger(ShowSignal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }).start();
+        // Llamar a updateGraph() para actualizar el gráfico con los datos recibidos
+        new Thread(() -> {
+            try {
+                int numSamples = 100; // Número de muestras a leer
+                Frame[] frames = bitalino.read(numSamples);
+
+                for (Frame frame : frames) {
+                    double time = System.currentTimeMillis();
+                    double voltage = frame.analog[0] * (3.0 / 1023.0);
+                    updateGraph(time, voltage);
+                }
+                // Detener la adquisición después de leer las muestras
+                bitalino.stop();
+            } catch (BITalinoException e) {
+            } catch (Throwable ex) {
+                Logger.getLogger(ShowSignal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
     }//GEN-LAST:event_ShowPlotButtonActionPerformed
 
     private void GoBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoBackButtonActionPerformed
