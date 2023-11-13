@@ -5,9 +5,6 @@
  */
 package GUI;
 
-import BITalino.BITalino;
-import BITalino.BITalinoException;
-import BITalino.Frame;
 import Client.ECG;
 import Client.Patient;
 import Client.SocketObject;
@@ -34,7 +31,6 @@ public class ShowSignal extends javax.swing.JFrame implements WindowListener {
 
     //private XYSeries ecgSeries;
     //private JFreeChart chart;
-
     private Object bean;
     private JDBCManager manager;
     private JDBCPatientManager patientManager;
@@ -255,7 +251,8 @@ public class ShowSignal extends javax.swing.JFrame implements WindowListener {
 
     private void ShowPlotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowPlotButtonActionPerformed
         // TODO add your handling code here:
-        BITalino bitalino = new BITalino();
+        //No es necesario volver a grabar nada en este paso
+        /*BITalino bitalino = new BITalino();
         try {
             bitalino.start(new int[]{0, 1, 2, 3, 4, 5}); // Inicia la adquisición de todos los canales analógicos
         } catch (BITalinoException e) {
@@ -280,7 +277,7 @@ public class ShowSignal extends javax.swing.JFrame implements WindowListener {
             } catch (Throwable ex) {
                 Logger.getLogger(ShowSignal.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }).start();
+        }).start();*/
     }//GEN-LAST:event_ShowPlotButtonActionPerformed
 
     private void GoBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoBackButtonActionPerformed
