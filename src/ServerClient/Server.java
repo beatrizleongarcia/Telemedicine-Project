@@ -29,7 +29,7 @@ public class Server {
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("New connection from " + clientSocket.getInetAddress());
+                System.out.println("New connection from IP:" + clientSocket.getInetAddress());
 
                 // Create a new thread for each client
                 ClientHandler clientHandler = new ClientHandler(clientSocket, this);
