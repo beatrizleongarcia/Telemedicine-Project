@@ -30,9 +30,9 @@ public class Client {
              ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
              Scanner scanner = new Scanner(System.in)) {
 
-            System.out.println("Connected to server");
+            System.out.println("Connected to server.");
 
-            // Handle incoming messages in a separate thread
+            // Handle incoming messages in a separate thread, so many clients can connect at the same time
             new Thread(() -> {
                 try {
                     while (true) {
