@@ -21,13 +21,12 @@ public class Patient implements Serializable {
     private String email;
     private String username;
     private byte[] password;
-    private String MAC;
 
     public Patient() {
         super();
     }
 
-    public Patient(Integer id, String name, String lastname, String gender, String email, String username, String password, String MAC) {
+    public Patient(Integer id, String name, String lastname, String gender, String email, String username, String password) {
         try {
             this.name = name;
             this.lastname = lastname;
@@ -38,13 +37,12 @@ public class Patient implements Serializable {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
             this.password = md.digest();
-            this.MAC = MAC;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
 
-    public Patient(String name, String lastname, String gender, String email, String username, String password, String MAC) {
+    public Patient(String name, String lastname, String gender, String email, String username, String password) {
         try {
             this.name = name;
             this.lastname = lastname;
@@ -54,7 +52,6 @@ public class Patient implements Serializable {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
             this.password = md.digest();
-            this.MAC = MAC;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -135,17 +132,9 @@ public class Patient implements Serializable {
         this.password = password;
     }
 
-    public String getMAC() {
-        return MAC;
-    }
-
-    public void setMAC(String MAC) {
-        this.MAC = MAC;
-    }
-
     @Override
     public String toString() {
         //To do
-        return "Patient{" + "name=" + name + ", lastname=" + lastname + ", id=" + id + ", gender=" + gender + ", email=" + email + ", username=" + username + ", password=" + password + ", MAC=" + MAC + '}';
+        return "Patient{" + "name=" + name + ", lastname=" + lastname + ", id=" + id + ", gender=" + gender + ", email=" + email + ", username=" + username + ", password=" + password + '}';
     }
 }

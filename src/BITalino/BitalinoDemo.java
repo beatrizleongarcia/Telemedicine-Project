@@ -26,8 +26,7 @@ public class BitalinoDemo {
             bitalino = new BITalino();
             Vector<RemoteDevice> devices = bitalino.findDevices(); //CHECK QUE EL BITALINO ESTA CONECTADO
             int SamplingRate = 10;
-            String macAddress = "20:16:02:14:75:76";
-            bitalino.open(macAddress, SamplingRate);
+            bitalino.open(MAC, SamplingRate);
 
             // Start acquisition on analog channels A2 and A6
             // For example, If you want A1, A3 and A4 you should use {0,2,3}

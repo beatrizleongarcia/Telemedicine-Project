@@ -41,7 +41,6 @@ public class JDBCPatientManager implements PatientManager {
             prep.setString(4, p.getEmail());
             prep.setString(5, p.getUsername());
             prep.setBytes(6, p.getPassword());
-            prep.setString(7, p.getMAC());
             prep.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(JDBCPatientManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,7 +66,7 @@ public class JDBCPatientManager implements PatientManager {
                 String gender = rs.getString("gender");
                 String email = rs.getString("email");
                 String MAC = rs.getString("MAC");
-                p = new Patient(id, name, lastname, gender, email, username, password, MAC);
+                p = new Patient(id, name, lastname, gender, email, username, password);
             }
             rs.close();
             stmt.close();

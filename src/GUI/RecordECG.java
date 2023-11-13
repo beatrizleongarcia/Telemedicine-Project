@@ -103,7 +103,8 @@ public class RecordECG extends javax.swing.JPanel implements WindowListener {
         String date = (String) dtf.format(current_time); //cast a string
 
         BitalinoDemo bitalinoDemo = new BitalinoDemo();
-        bitalinoDemo.recordSignal(patient.getMAC()); //COGEMOS MAC ADDRESS DEL PACIENTE
+        String macAddress = "98:D3:51:FD:9C:ED";
+        bitalinoDemo.recordSignal(macAddress); //COGEMOS MAC ADDRESS DEL PACIENTE
 
         ArrayList<Integer> ecg_lista = bitalinoDemo.getList();
 
