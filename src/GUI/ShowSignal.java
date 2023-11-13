@@ -20,11 +20,11 @@ import java.util.logging.Logger;
 import jdbc.JDBCECGManager;
 import jdbc.JDBCManager;
 import jdbc.JDBCPatientManager;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+//import org.jfree.chart.ChartFactory;
+//import org.jfree.chart.ChartPanel;
+//import org.jfree.chart.JFreeChart;
+//import org.jfree.data.xy.XYSeries;
+//import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -32,8 +32,8 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class ShowSignal extends javax.swing.JFrame implements WindowListener {
 
-    private XYSeries ecgSeries;
-    private JFreeChart chart;
+    //private XYSeries ecgSeries;
+    //private JFreeChart chart;
 
     private Object bean;
     private JDBCManager manager;
@@ -54,11 +54,11 @@ public class ShowSignal extends javax.swing.JFrame implements WindowListener {
         this.signalsRegistered = signalsRegistered;
         this.ecg = ecg;
         initComponents();
-        initGraph();
+        //initGraph();
     }
 
     //prueba
-    private void initGraph() {
+    /*private void initGraph() {
         ecgSeries = new XYSeries("ECG Data");
         XYSeriesCollection dataset = new XYSeriesCollection(ecgSeries);
         chart = ChartFactory.createXYLineChart(
@@ -272,7 +272,7 @@ public class ShowSignal extends javax.swing.JFrame implements WindowListener {
                 for (Frame frame : frames) {
                     double time = System.currentTimeMillis();
                     double voltage = frame.analog[0] * (3.0 / 1023.0);
-                    updateGraph(time, voltage);
+                    //updateGraph(time, voltage);
                 }
                 // Detener la adquisición después de leer las muestras
                 bitalino.stop();
