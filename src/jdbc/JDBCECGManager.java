@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +26,13 @@ import java.util.logging.Logger;
 public class JDBCECGManager implements ECGManager {
 
     private JDBCManager manager;
+    private Connection c;
 
     public JDBCECGManager(JDBCManager manager) {
         this.manager = manager;
+    }
+    public JDBCECGManager(Connection c) {
+        this.c = c;
     }
 
     @Override

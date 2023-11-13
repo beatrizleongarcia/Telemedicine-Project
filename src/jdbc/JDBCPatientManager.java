@@ -8,6 +8,7 @@ import Client.Patient;
 import ifaces.PatientManager;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,11 +25,15 @@ import java.util.logging.Logger;
  */
 public class JDBCPatientManager implements PatientManager {
 
-    private final JDBCManager manager;
+    private  JDBCManager manager;
+    private  Connection c;
 
     public JDBCPatientManager(JDBCManager m) {
         this.manager = m;
     }
+    public JDBCPatientManager(Connection c) {
+            this.c = c;
+        }
 
     @Override
     public void addPatient(Patient p) {

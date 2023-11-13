@@ -4,7 +4,9 @@
  */
 package jdbc;
 
+import ifaces.ECGManager;
 import ifaces.Manager;
+import ifaces.PatientManager;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,6 +19,8 @@ import java.sql.Statement;
 public class JDBCManager implements Manager {
 
     private Connection c = null;
+    private PatientManager patient;
+    private ECGManager ecg;
 
     public Connection getConnection() {
         return c;
@@ -29,8 +33,8 @@ public class JDBCManager implements Manager {
             //here we get the connection
             this.c = DriverManager.getConnection("jdbc:sqlite:jdbc:sqlite:./db/TelemedicineProject.db");
             c.createStatement().execute("PRAGMA foreign_keys=ON");
-            //patient = new PatientManager(c);
-            //ecg = new ECGManager(c);
+            patient = new JDBCPatientManager(c);
+            ecg = new JDBCECGManager(c);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -52,15 +56,11 @@ public class JDBCManager implements Manager {
 
             String sq1 = "CREATE TABLE IF NOT EXISTS Patient " + "(id     INTEGER  PRIMARY KEY AUTOINCREMENT,"
                     + " name  TEXT   NOT NULL, " + " lastname  TEXT   NOT NULL, " + " email   TEXT NOT NULL, "
-                    + " username  TEXT   NOT NULL, " + " password  BLOB   NOT NULL, " + " gender TEXT CHECK (gender = 'M' OR gender = 'F'), "
-                    + " mac TEXT NOT NULL), "
+                    + " username  TEXT   NOT NULL, " + " password  BLOB   NOT NULL, " + " gender TEXT CHECK (gender = 'M' OR gender = 'F')), "
                     + "CREATE TABLE IF NOT EXISTS ECG " + "(id     INTEGER  PRIMARY KEY AUTOINCREMENT, "
                     + " observation TEXT NOT NULL, " + " ecg BLOB NOT NULL, date TEXT NOT NULL"
                     + "patientId INTEGER REFERENCES Patient(id) ON UPDATE CASCADE ON DELETE CASCADE)";
             stmt.executeUpdate(sq1);
-
-            //sq1 = "CREATE TABLE IF NOT EXISTS ECG "
-            //stmt.executeUpdate(sq1);
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
