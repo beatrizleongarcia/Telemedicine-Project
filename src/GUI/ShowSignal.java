@@ -57,6 +57,7 @@ public class ShowSignal extends javax.swing.JFrame implements WindowListener {
         initGraph();
     }
 
+    //prueba
     private void initGraph() {
         ecgSeries = new XYSeries("ECG Data");
         XYSeriesCollection dataset = new XYSeriesCollection(ecgSeries);
