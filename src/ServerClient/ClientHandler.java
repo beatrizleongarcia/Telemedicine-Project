@@ -15,9 +15,9 @@ import ServerClient.Client;
  * @author beatr
  */
 
-public class ClientHandler implements Runnable {
+public class ClientHandler{
 
-    private Socket clientSocket;
+    /*private Socket clientSocket;
     private Server server;
     private ObjectOutputStream outputStream;
 
@@ -55,5 +55,5 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
