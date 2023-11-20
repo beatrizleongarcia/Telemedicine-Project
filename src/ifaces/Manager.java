@@ -4,6 +4,8 @@
  */
 package ifaces;
 
+import java.sql.Connection;
+
 /**
  *
  * @author maria
@@ -15,5 +17,11 @@ public interface Manager {
     public void disconnect();
 
     public void createTables();
+    
+    public PatientManager getPatient();
+    
+    public ECGManager getECG();
+    
+    public Connection getConnection();
 
 }

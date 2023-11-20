@@ -22,8 +22,18 @@ public class JDBCManager implements Manager {
     private PatientManager patient;
     private ECGManager ecg;
 
+    @Override
     public Connection getConnection() {
         return c;
+    }
+    @Override
+    public PatientManager getPatient() {
+        return patient;
+    }
+
+    @Override
+    public ECGManager getECG() {
+        return ecg;
     }
 
     @Override
